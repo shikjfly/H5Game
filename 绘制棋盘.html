@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>绘制棋盘案例</title>
+	<style type="text/css">
+		canvas{
+			border: 1px solid black;
+			margin-right: 20px;
+		}
+	</style>
+</head>
+<body>
+	
+	<h1>绘制棋盘案例</h1>
+	<h3>8X8=64个方格，小方格尺寸40px*40px</h3>
+	<canvas id="canvas" width="320" height="320"></canvas>
+	<canvas id="canvas1" width="320" height="320"></canvas>
+	<canvas id="canvas2" width="320" height="320"></canvas>
+	<hr>
+	<h2>基础教学</h2>
+	<p>1、方块有填充，用ctx.fillRect(?,?,?,?)默认是黑色，需要ctx.fillStyle改变颜色</p>
+	<p>2、方格就线条，用ctx.strokeRect(?,?,?,?)默认边框黑色，需要ctx.strokeStyle改变颜色，线条宽度用ctx.lineWidth = 3调节</p>
+
+
+
+	<script type="text/javascript">
+		//第一种
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		ctx.fillStyle = "black";
+		for (var i = 0; i < 4; i++) {
+			ctx.fillRect(0,(0+80*i),40,40);
+			ctx.fillRect(80,(0+80*i),40,40);
+			ctx.fillRect(160,(0+80*i),40,40);
+			ctx.fillRect(240,(0+80*i),40,40);
+
+			ctx.fillRect(40,(40+80*i),40,40);
+			ctx.fillRect(120,(40+80*i),40,40);
+			ctx.fillRect(200,(40+80*i),40,40);
+			ctx.fillRect(280,(40+80*i),40,40);
+		}
+
+		// 第二种
+		var canvas1 = document.getElementById("canvas1");
+		var ctx1 = canvas1.getContext("2d");
+		ctx1.fillStyle = "red";
+
+		for (var i = 0; i < 4; i++) {
+			for (var j = 0; j < 4; j++) {
+				ctx1.fillRect(80*j,80*i,40,40);
+				ctx1.fillRect(40+80*j,40+80*i,40,40);
+			}
+		}
+
+		// 第三种
+		var canvas2 = document.getElementById("canvas2");
+		var ctx2 = canvas2.getContext("2d");
+		for (var i = 0; i < 4; i++) {
+			for (var j = 0; j < 4; j++) {
+				ctx2.fillStyle = "black";
+				ctx2.fillRect(80*j,80*i,40,40);
+				ctx2.fillRect(40+80*j,40+80*i,40,40);
+				ctx2.fillStyle = "red";
+				ctx2.fillRect(80*j+40,80*i,40,40);
+				ctx2.fillRect(80*j,40+80*i,40,40);
+			}
+		}
+
+
+
+
+
+	</script>
+	
+</body>
+</html>
