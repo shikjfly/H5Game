@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>绘制五子棋案例</title>
+	<style type="text/css">
+		canvas{
+			border: 1px solid red;
+			margin-right: 20px;
+		}
+	</style>
+</head>
+<body>
+	
+	<h1>绘制五子棋案例</h1>
+	<h3>18X18个方格，小方格尺寸20px*20px</h3>
+	<canvas id="canvas" width="380" height="380"></canvas>
+	<hr>
+	<h2>基础教学</h2>
+	<p>1、beginPath()开始，中间用moveTo（）和lineTo（），最后stroke（）结束</p>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		// ctx.strokeStyle = "red";
+		// ctx.lineWidth = 2;
+		ctx.beginPath();
+		for (var i = 0; i < 19; i++) {		
+			ctx.moveTo(10,10+20*i);
+			ctx.lineTo(370,10+20*i);			
+			ctx.moveTo(10+20*i,10);
+			ctx.lineTo(10+20*i,370);
+		}
+		ctx.stroke();
+		//end 画格子 
+		var blorwh;
+		var matrix = [
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+		];
+		var mtxPosX, mtxPosY;
+		$("#canvas").click(function(event){
+			console.log(event.offsetX);
+			var arcPosX, arcPosY;
+			for (var j = 0; j < 19; j++) {
+				if ((Math.abs(event.offsetX - (10+20*j)))<10) {
+					arcPosX = 10 + 20*j;
+					mtxPosX = j;
+				}
+				if ((Math.abs(event.offsetY - (10+20*j)))<10) {
+					arcPosY = 10 + 20*j;
+					mtxPosY = j;
+				}
+			}
+			
+			if (matrix[mtxPosX][mtxPosY] == 0) {
+				blorwh = !blorwh;
+				ctx.beginPath();
+				if (blorwh) {
+					ctx.fillStyle = "blue";
+					ctx.arc(arcPosX, arcPosY, 10, 0, Math.PI*2, false)
+					matrix[mtxPosX][mtxPosY] = 1;
+				}else{
+					ctx.fillStyle = "white";
+					ctx.arc(arcPosX, arcPosY, 10, 0, Math.PI*2, false)
+					ctx.stroke();
+					matrix[mtxPosX][mtxPosY] = 2;
+				}
+				ctx.fill();
+			}
+		});
+
+
+	</script>
+	
+</body>
+</html>
