@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹球游戏</title>
+	<style type="text/css">
+		canvas{
+			margin-right: 20px;
+		}
+	</style>
+</head>
+<body>
+	
+	<h1>弹球游戏</h1>
+	<h3></h3>
+	<canvas id="canvas" width="400" height="400"></canvas>
+	<hr>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+
+		var ball = {
+			x : 100,
+			y : 100,
+			xSpeed : -2,
+			ySpeed : -7
+		};
+		ball.draw = function(){
+			ctx.beginPath();
+			ctx.fillStyle = "red";
+			ctx.arc(this.x, this.y, 10, 0, Math.PI*2, false);
+			ctx.fill();
+		}
+		ball.move = function(){
+			this.x = this.x + this.xSpeed;
+			this.y = this.y + this.ySpeed;
+		}
+
+		ball.checkCanvas = function(){
+			if (this.x <0 || this.x >400) {
+				this.xSpeed = -this.xSpeed;
+			}
+			if (this.y <0 || this.y >400) {
+				this.ySpeed = -this.ySpeed;
+			}
+		}
+
+		var panel = {
+			x : 200,
+			y : 390,
+			xSize : 50,
+			ySize : 5			
+		}
+		panel.draw = function(){
+			ctx.fillRect(this.x, this.y, this.xSize, this.ySize);
+		}
+
+		setInterval(function(){
+			ctx.clearRect(0, 0, 400, 400);
+			ball.draw();
+			panel.draw();
+			ball.move();
+			ball.checkCanvas();
+			ctx.strokeRect(0, 0, 400, 400);
+		},30)
+
+		$("body").keydown(function(event){
+			console.log(event.keyCode);
+			if (event.keyCode == 37) {
+				panel.x = panel.x - 5;
+				if (panel.x < 0) {
+					panel.x = 0;
+				}
+			}
+			if (event.keyCode == 39) {
+				panel.x = panel.x +5;
+				if (panel.x > 400 - panel.xSize) {
+					panel.x = 400 - panel.xSize;
+				}
+			}
+		})
+
+	</script>
+	
+</body>
+</html>
