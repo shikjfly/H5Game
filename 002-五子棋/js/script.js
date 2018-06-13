@@ -35,52 +35,85 @@ var arr = [
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
-canvas2.onclick = function(event){
+
+
+canvas2.onclick = function(){
+	console.log("点击进入：offsetX="+event.offsetX + " offsetY="+event.offsetY )
 	for (var i = 0; i < 19; i++) {
-		if (Math.abs(event.offsetX - (10+20*i)) <= 10 ){
-			var arrNumX = i;
+		if ((Math.abs(event.offsetX - (10+20*i))) <= 10 ) {
+			cirPosX = 10+20*i ;
+			var x = i;
 		}
-		if (Math.abs(event.offsetY - (10+20*i)) <= 10 ){
-			var arrNumY = i;
+		if ((Math.abs(event.offsetY - (10+20*i))) <= 10 ) {
+			cirPosY = 10+20*i ;
+			var y = i;
 		}
 	}
+	// end 点击判定圆心坐标。。
 
-	if (arr[arrNumX][arrNumY] == 0) {
+	if ( x != undefined && y!=undefined && arr[x][y] == 0 ) {
 		ctx2.beginPath();
 		if (flag) {
-			ctx2.fillStyle = "black";					
-			ctx2.arc(10+20*arrNumX,10+20*arrNumY,10,0,Math.PI*2,false);
-			arr[arrNumX][arrNumY] = 1;
-		}else{		
+			ctx2.fillStyle = "black";
+			ctx2.arc(cirPosX,cirPosY, 10, 0, Math.PI*2, false);
+			arr[x][y] = 1;
+			console.log("黑色="+1)
+		}else{
 			ctx2.fillStyle = "white";
-			ctx2.arc(10+20*arrNumX,10+20*arrNumY,10,0,Math.PI*2,false);
+			ctx2.arc(cirPosX,cirPosY, 10, 0, Math.PI*2, false);
+			arr[x][y] = 2;
 			ctx2.stroke();
-			arr[arrNumX][arrNumY] = 2;
+			console.log("白色="+2)
 		}
-		ctx2.fill();	
-		console.log(flag)
+		ctx2.fill();
 		flag = !flag;
 	}
+	// end 点击判定 黑白落子，加不能重复
+	var winFlag;
 
-
-	for (var i = 18; i > 3; i--) {
-		for(var j = 18; j > 3; j--){
-			if (arr[i][j]==1 && arr[i-1][j]==1 && arr[i-2][j]==1 && arr[i-3][j]==1 && arr[i-4][j]==1) {
-				alert("黑子赢了");
+	if (arr[x][y] == arr[x-1][y]) {		
+		if (arr[x-1][y] == arr[x-2][y]) {
+			if (arr[x-2][y] == arr[x-3][y]) {
+				if (arr[x-3][y] == arr[x-4][y]) {
+					alert("你后赢了")
+				}else{
+				}
+			}else{
 			}
-			// if (arr[i][j]==1 && arr[i][j+1]==1 && arr[i][j+2]==1 && arr[i][j+3]==1 && arr[i][j+4]==1) {
-			// 	alert("黑子赢了");
-			// }
-			if (arr[i][j]==2 && arr[i-1][j]==2 && arr[i-2][j]==2 && arr[i-3][j]==2 && arr[i-4][j]==2) {
-				alert("白子赢了");
-			}
-			// if (arr[i][j]==2 && arr[i][j+1]==2 && arr[i][j+2]==2 && arr[i][j+3]==2 && arr[i][j+4]==2) {
-			// 	alert("白子赢了");
-			// }
-		}			
+		}else{
+		}
+	}else{
+		for (var i = 0; i < 4; i++) {
+			if (arr[x][y] != arr[x+1+i][y]) {	
+				winFlag = 0;
+				break;
+			}else{
+				winFlag = 1;
+			}	
+		}
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
